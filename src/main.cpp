@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
     {
         po::options_description description;
         description.add_options()
-            ("telnet-port", po::value<uint16_t>()->default_value(21), "TCP port for Telnet server")
+            ("port,p", po::value<uint16_t>()->default_value(21), "TCP port for Telnet server")
             ("help", "display help message and exit")
         ;
 
@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
 
     try
     {
-        TelnetServer ts(io_service, vm["telnet-port"].as<uint16_t>());
+        TelnetServer ts(io_service, vm["port"].as<uint16_t>());
         std::cout << "Before io_service.run()\n";
         io_service.run();
         std::cout << "After io_service.run()\n";
