@@ -1,0 +1,5 @@
+Makefile
+boost-telnet
+CMakeFiles
+*.cmake
+CMakeCache*
