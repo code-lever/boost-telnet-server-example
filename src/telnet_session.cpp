@@ -27,13 +27,14 @@ void TelnetSession::handle_read(const bs::error_code& error, size_t bytes_transf
 {
     if (!error)
     {
-        std::cout << "session::handle_read " << (int) bytes_transferred << " bytes\n";
+        std::cout << "TelnetSession::handle_read " << (int) bytes_transferred << " bytes\n";
         ba::async_write(mSocket,
             ba::buffer(data, bytes_transferred), 
             boost::bind(&TelnetSession::handle_write, this, ba::placeholders::error));
     }
     else
     {
+        std::cout << "TelnetSession::handle_read error: " << error << std::endl;
         delete this;
     }
 }
@@ -42,13 +43,14 @@ void TelnetSession::handle_write(const bs::error_code& error)
 {
     if (!error)
     {
-        std::cout << "session::handle_write\n";
+        std::cout << "TelnetSession::handle_write\n";
         mSocket.async_read_some(ba::buffer(data, max_length),
             boost::bind(&TelnetSession::handle_read, this,
                 ba::placeholders::error, ba::placeholders::bytes_transferred));
     }
     else
     {
+        std::cout << "TelnetSession::handle_write error: " << error << std::endl;
         delete this;
     }
 }
